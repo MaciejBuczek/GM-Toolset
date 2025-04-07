@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  CONTAINER_APP_NAME: gm-toolset-sample-v1
+  RESOURCE_GROUP: gm-toolset
+
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
@@ -15,3 +19,15 @@ jobs:
           docker login --username maciejbuczek --password ${{secrets.GHCR}} ghcr.io
           docker build ./src/Services/Sample/Sample.API -t ghcr.io/maciejbuczek/sample:latest
           docker push ghcr.io/maciejbuczek/sample:latest
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Container Apps
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          imageToDeploy: ghcr.io/maciejbuczek/sample:latest
+          resourceGroup: ${{ env.RESOURCE_GROUP }}
+          containerAppName: ${{ env.CONTAINER_APP_NAME }}
