@@ -26,6 +26,11 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 });
 
+app.MapGet("/HelloAzure", () =>
+{
+    return "Hello I live in the Azure Container App now!";
+});
+
 app.Run();
 
 internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
