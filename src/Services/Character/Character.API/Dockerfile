@@ -17,7 +17,7 @@ COPY ["src/Common/Common/Common.csproj", "Common/Common/"]
 RUN dotnet restore "Services/Character/Character.API/Character.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Character/Character.API"
-RUN dotnet build "./Character.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Character.API.csproj" -c $BUILD_CONFIGURATION -o /app/build --verbosity:diagnostic
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
