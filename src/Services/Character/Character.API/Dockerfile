@@ -12,8 +12,9 @@ LABEL org.opencontainers.image.source https://github.com/maciejbuczek/gm-toolset
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/Services/Character/Character.API/Character.API.csproj", "src/Services/Character/Character.API/"]COPY ["src/Common/Common/Common.csproj", "src/Common/Common/"]
-RUN dotnet restore "./Services/Character/Character.API/Character.API.csproj"
+COPY ["src/Services/Character/Character.API/Character.API.csproj", "Services/Character/Character.API/"]
+COPY ["src/Common/Common/Common.csproj", "Common/Common/"]
+RUN dotnet restore "Services/Character/Character.API/Character.API.csproj
 COPY . .
 WORKDIR "/src/Services/Character/Character.API"
 RUN dotnet build "./Character.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
