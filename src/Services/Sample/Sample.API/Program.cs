@@ -1,3 +1,5 @@
+using Common;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -29,6 +31,11 @@ app.MapGet("/weatherforecast", () =>
 app.MapGet("/HelloAzure", () =>
 {
     return "Hello I live in the Azure Container App now!";
+});
+
+app.MapGet("/Common", () =>
+{
+    return Sample.Test;
 });
 
 app.Run();
