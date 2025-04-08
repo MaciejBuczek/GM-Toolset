@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  CONTAINER_APP_NAME: gm-toolset-sample-v1
+  CHARACTER_CONTAINER_APP_NAME: gm-toolset-character-api
   RESOURCE_GROUP: gm-toolset
 
 jobs:
@@ -17,8 +17,8 @@ jobs:
       - name: Build and push the image
         run: |
           docker login --username maciejbuczek --password ${{secrets.GHCR}} ghcr.io
-          docker build ./src/Services/Sample/Sample.API -t ghcr.io/maciejbuczek/sample:latest
-          docker push ghcr.io/maciejbuczek/sample:latest
+          docker build ./src/Services/Character/Character.API -t ghcr.io/maciejbuczek/Character.API:latest
+          docker push ghcr.io/maciejbuczek/Character.API:latest
 
       - name: Azure Login
         uses: azure/login@v2
@@ -28,6 +28,6 @@ jobs:
       - name: Deploy to Azure Container Apps
         uses: azure/container-apps-deploy-action@v1
         with:
-          imageToDeploy: ghcr.io/maciejbuczek/sample:latest
+          imageToDeploy: ghcr.io/maciejbuczek/Character.API:latest
           resourceGroup: ${{ env.RESOURCE_GROUP }}
-          containerAppName: ${{ env.CONTAINER_APP_NAME }}
+          containerAppName: ${{ env.CHARACTER_CONTAINER_APP_NAME }}
