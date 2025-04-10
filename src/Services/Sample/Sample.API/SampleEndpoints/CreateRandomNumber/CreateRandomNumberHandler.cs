@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.Mediator;
 
 namespace Sample.API.SampleEndpoints.CreateRandomNumber
 {

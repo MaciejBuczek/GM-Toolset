@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.OpenApi;
-using Common;
+using Common.Mediator;
 using Sample.API.SampleEndpoints.CreateRandomNumber;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>, CreateRandomNumberCommandHandler>();
+builder.Services.AddScoped<CreateRandomNumberCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>>(sp =>
+    new LoggingRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>(
+        sp.GetRequiredService<CreateRandomNumberCommandHandler>(),
+        sp.GetRequiredService<ILogger<LoggingRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>>>()));
 
 // Add services to the container.
 
