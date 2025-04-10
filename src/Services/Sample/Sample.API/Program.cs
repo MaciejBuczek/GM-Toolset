@@ -1,4 +1,5 @@
 using Common.Mediator;
+using Sample.API;
 using Sample.API.SampleEndpoints.CreateRandomNumber;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,11 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<CreateRandomNumberCommandHandler>();
-builder.Services.AddScoped<IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>>(sp =>
-    new LoggingRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>(
-        sp.GetRequiredService<CreateRandomNumberCommandHandler>(),
-        sp.GetRequiredService<ILogger<LoggingRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>>>()));
+builder.Services.AddHandlers();
 
 // Add services to the container.
 
