@@ -1,10 +1,23 @@
-using Common;
+using Common.Mediator;
+using Sample.API;
+using Sample.API.SampleEndpoints.CreateRandomNumber;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddHandlers();
 
 // Add services to the container.
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Configure the HTTP request pipeline.
 
@@ -35,8 +48,21 @@ app.MapGet("/HelloAzure", () =>
 
 app.MapGet("/Common", () =>
 {
-    return Sample.Test;
+    return Common.Sample.Test;
 });
+
+app.MapPost("numbers/", async (
+    int maxNumber,
+    IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse> handler,
+    CancellationToken cancellationToken) =>
+{
+    var number = await handler.Handle(new CreateRandomNumberRequest(maxNumber), cancellationToken);
+
+    return number is not null ? Results.Ok(number) : Results.Problem();
+})
+.WithName("CreateRandomNumber")
+.WithTags("Numbers")
+.WithOpenApi();
 
 app.Run();
 
