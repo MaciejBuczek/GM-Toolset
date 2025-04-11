@@ -34,12 +34,12 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: |
-                ❌ **Invalid Pull Request title format.**
-              
-                The title must match the format:
-                `{feature|bugfix}/{be|fe}-{id} description`
-              
-                For example: `feature/fe-123 add user profile`
-              
-                Please update the title accordingly.
+              body: `❌ **Invalid Pull Request title format.**
+
+                  The title must match the format:
+                  \`{feature|bugfix}/{be|fe}-{id} description\`
+                  
+                  For example: \`feature/fe-123 add user profile\`
+                  
+                  Please update the title accordingly.`
+                        })
