@@ -44,6 +44,6 @@ jobs:
                   Please update the title accordingly.`
                         })
 
-            - name: Fail the workflow if Pull Request title is invalid
-                    if: steps.pr-check.outputs.valid == 'false'
-                    run: exit 1
+      - name: Fail the workflow if Pull Request title is invalid
+        if: steps.pr-check.outputs.valid == 'false'
+        run: exit 1
