@@ -1,4 +1,5 @@
 ﻿using Common.Mediator;
+using Common.Mediator.Pipelines;
 using Sample.API.SampleEndpoints.CreateRandomNumber;
 
 namespace Sample.API

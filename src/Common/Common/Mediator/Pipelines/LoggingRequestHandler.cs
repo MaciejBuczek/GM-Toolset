@@ -1,16 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Common.Mediator
+namespace Common.Mediator.Pipelines
 {
-    public interface IRequestHandler<TRequest, TResponse>
-    {
-        Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken = default);
-    }
-
     public sealed class LoggingRequestHandler<TRequest, TResponse>(
-        IRequestHandler<TRequest, TResponse> innerHandler,
-        ILogger<LoggingRequestHandler<TRequest, TResponse>> logger) : IRequestHandler<TRequest, TResponse>
-        where TRequest : notnull
+            IRequestHandler<TRequest, TResponse> innerHandler,
+            ILogger<LoggingRequestHandler<TRequest, TResponse>> logger) : IRequestHandler<TRequest, TResponse>
+            where TRequest : notnull
     {
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
