@@ -2,25 +2,24 @@ name: Validate Pull Request Name
 on:
   push:
   pull_request:
-   types: [opened, synchronize]
+    types: [opened, synchronize]
 
 jobs:
   validate_pr_name:
     runs-on: ubuntu-20.04
     steps:
-    - name : Validate Pull Request Name
-      env:
+      - name: Validate Pull Request Name
+        env:
           PR_REGEX: "^(bugfix|feature)/(be|fe)-[0-9]+.*$"
           TITLE: ${{ github.event.pull_request.title }}
-      run: |
-        echo "Pull Request name is: $TITLE"
-        
-        if [[ "$TITLE" =~ $PR_REGEX ]]; then
+        run: |
+          echo "Pull Request name is: $TITLE"
+          
+          if [[ "$TITLE" =~ $PR_REGEX ]]; then
             echo "Pull Request name matches the pattern"
+            exit 0
+          else
+            echo "Pull Request name does not match the pattern: {feature/bugfix}/{be/fe}-{id}"
             exit 1
           fi
-        else
-          echo "Pull Request name does not match the pattern: {feature/bugfix}/{be/fe}-{id}"
-          exit 1
-        fi
-      shell: bash
+        shell: bash
