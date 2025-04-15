@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  CHARACTER_CONTAINER_APP_NAME: gm-toolset-character-api
+  CHARACTER_CONTAINER_APP_NAME: character-api
   RESOURCE_GROUP: gm-toolset
 
 jobs:
