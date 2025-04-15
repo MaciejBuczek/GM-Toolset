@@ -1,0 +1,10 @@
+services:
+    character.db:
+        image: postgres
+    character.api:
+        image: ${DOCKER_REGISTRY-}characterapi
+        build:
+            context: .
+            dockerfile: Services/Character/Character.API/Dockerfile
+volumes:    
+    postgres:
