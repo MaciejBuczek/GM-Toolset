@@ -1,5 +1,6 @@
 ﻿using Common.Mediator;
 using Common.Mediator.Pipelines;
+using FluentValidation;
 using Sample.API.SampleEndpoints.CreateRandomNumber;
 
 namespace Sample.API
@@ -8,12 +9,25 @@ namespace Sample.API
     {
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
-            services.AddScoped<CreateRandomNumberCommandHandler>();
+            services.AddScoped<
+                IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>,
+                CreateRandomNumberCommandHandler>();
 
-            services.AddScoped<IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>>(sp =>
-                new LoggingRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>(
-                    sp.GetRequiredService<CreateRandomNumberCommandHandler>(),
-                    sp.GetRequiredService<ILogger<LoggingRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse>>>()));
+            services.Scan(scan => scan
+                .FromAssemblyOf<Program>()
+                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
+
+            services.AddValidatorsFromAssembly(
+                typeof(Program).Assembly);
+
+            services.Decorate(
+                typeof(IRequestHandler<,>),
+                typeof(ValidationRequestHandler<,>));
+            services.Decorate(
+                typeof(IRequestHandler<,>),
+                typeof(LoggingRequestHandler<,>));
 
             return services;
         }

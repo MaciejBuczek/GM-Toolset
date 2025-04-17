@@ -1,6 +1,6 @@
-using Common.Mediator;
+using Carter;
+using FluentValidation;
 using Sample.API;
-using Sample.API.SampleEndpoints.CreateRandomNumber;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +9,18 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHandlers();
 
+builder.Services.AddCarter();
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+
 // Add services to the container.
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
 // Configure the HTTP request pipeline.
 
@@ -51,18 +54,7 @@ app.MapGet("/Common", () =>
     return Common.Sample.Test;
 });
 
-app.MapPost("numbers/", async (
-    int maxNumber,
-    IRequestHandler<CreateRandomNumberRequest, CreateRandomNumberResponse> handler,
-    CancellationToken cancellationToken) =>
-{
-    var number = await handler.Handle(new CreateRandomNumberRequest(maxNumber), cancellationToken);
-
-    return number is not null ? Results.Ok(number) : Results.Problem();
-})
-.WithName("CreateRandomNumber")
-.WithTags("Numbers")
-.WithOpenApi();
+app.MapCarter();
 
 app.Run();
 
