@@ -1,3 +1,4 @@
 ﻿global using Marten;
-global using Common;
 global using System.Reflection;
+global using Character.API.Entities;
+global using Common.CQRS;
