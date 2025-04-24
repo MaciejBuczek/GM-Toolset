@@ -1,14 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMarten(config =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("Database");
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        throw new ApplicationException("Connection string is empty");
-    }
-    config.Connection(connectionString);
-}).UseLightweightSessions();
+builder.Services.AddMarten(builder.Configuration.GetConnectionString("Database"));
 
 var app = builder.Build();
 
