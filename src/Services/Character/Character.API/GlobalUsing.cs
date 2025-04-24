@@ -7,3 +7,4 @@ global using Mapster;
 global using Character.API;
 global using FluentValidation;
 global using Character.API.Features.Shared.Validators;
+global using Common.Mediator;

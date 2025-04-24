@@ -9,7 +9,7 @@
         {
             app.MapPost("/characters", 
                 async (CreateCharacterRequest request,
-                ICommandHandler<CreateCharacterCommand,
+                IRequestHandler<CreateCharacterCommand,
                 CreateCharacterResult> handler,
                 CancellationToken cancellationToken) =>
                 {
