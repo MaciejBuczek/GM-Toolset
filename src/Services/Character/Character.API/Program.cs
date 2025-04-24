@@ -1,8 +1,20 @@
+using FluentValidation;
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 builder.Services.AddMarten(builder.Configuration.GetConnectionString("Database"));
+builder.Services.AddHandlers();
+builder.Services.AddCarter();
+//builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -16,5 +28,7 @@ app.MapGet("/appinfo", () =>
 
     return appInfo;
 });
+
+app.MapCarter();
 
 app.Run();

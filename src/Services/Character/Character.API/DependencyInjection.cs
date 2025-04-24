@@ -1,4 +1,8 @@
-﻿namespace Character.API
+﻿using Common.Mediator.Pipelines;
+using Common.Mediator;
+using FluentValidation;
+
+namespace Character.API
 {
     public static class DependencyInjection
     {
@@ -9,12 +13,35 @@
                 throw new ApplicationException("Connection string is empty");
             }
 
-            services.AddMarten(config =>
-            {
-                config.Connection(connectionString);
-            }).UseLightweightSessions();
+            services.AddMarten(config => config.Connection(connectionString)).UseLightweightSessions();
 
             return services;
+        }
+
+        public static IServiceCollection AddHandlers(this IServiceCollection services)
+        {
+            services.Scan(scan => scan
+                .FromAssemblyOf<Program>()
+                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
+
+            services.AddValidatorsFromAssembly(
+                typeof(Program).Assembly);
+
+            //services.Decorate(
+            //    typeof(IRequestHandler<,>),
+            //    typeof(ValidationRequestHandler<,>));
+            //services.Decorate(
+            //    typeof(IRequestHandler<,>),
+            //    typeof(LoggingRequestHandler<,>));
+
+            return services;
+        }
+
+        public static WebApplication UseApiServices(this WebApplication app)
+        {
+            return app;
         }
     }
 }
