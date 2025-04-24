@@ -29,12 +29,12 @@ namespace Character.API
             services.AddValidatorsFromAssembly(
                 typeof(Program).Assembly);
 
-            //services.Decorate(
-            //    typeof(IRequestHandler<,>),
-            //    typeof(ValidationRequestHandler<,>));
-            //services.Decorate(
-            //    typeof(IRequestHandler<,>),
-            //    typeof(LoggingRequestHandler<,>));
+            services.Decorate(
+                typeof(IRequestHandler<,>),
+                typeof(ValidationRequestHandler<,>));
+            services.Decorate(
+                typeof(IRequestHandler<,>),
+                typeof(LoggingRequestHandler<,>));
 
             return services;
         }
