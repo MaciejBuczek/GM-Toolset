@@ -1,20 +1,20 @@
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMarten(config =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("Database");
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        throw new ApplicationException("Connection string is empty");
-    }
-    config.Connection(connectionString);
-}).UseLightweightSessions();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddMarten(builder.Configuration.GetConnectionString("Database")?? string.Empty);
+builder.Services.AddHandlers();
+builder.Services.AddCarter();
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.MapGet("/common", () => Sample.Test);
+app.UseHttpsRedirection();
 
 app.MapGet("/appinfo", () =>
 {
@@ -26,5 +26,7 @@ app.MapGet("/appinfo", () =>
 
     return appInfo;
 });
+
+app.MapCarter();
 
 app.Run();

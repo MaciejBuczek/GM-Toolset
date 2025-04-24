@@ -1,3 +1,11 @@
 ﻿global using Marten;
-global using Common;
 global using System.Reflection;
+global using Character.API.Entities;
+global using Common.CQRS;
+global using Carter;
+global using Mapster;
+global using Character.API;
+global using FluentValidation;
+global using Character.API.Features.Shared.Validators;
+global using Common.Mediator;
+global using Common.Mediator.Pipelines;
