@@ -2,7 +2,7 @@
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddMartem(this IServiceCollection services, string connectionString)
+        public static IServiceCollection AddMarten(this IServiceCollection services, string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
             {
