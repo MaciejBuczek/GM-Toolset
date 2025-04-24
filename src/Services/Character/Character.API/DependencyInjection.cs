@@ -1,12 +1,8 @@
-﻿using Common.Mediator.Pipelines;
-using Common.Mediator;
-using FluentValidation;
-
-namespace Character.API
+﻿namespace Character.API
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddMartem(this IServiceCollection services, string? connectionString)
+        public static IServiceCollection AddMartem(this IServiceCollection services, string connectionString)
         {
             if (string.IsNullOrEmpty(connectionString))
             {

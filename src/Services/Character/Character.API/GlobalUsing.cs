@@ -8,3 +8,4 @@ global using Character.API;
 global using FluentValidation;
 global using Character.API.Features.Shared.Validators;
 global using Common.Mediator;
+global using Common.Mediator.Pipelines;

@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMarten(builder.Configuration.GetConnectionString("Database"));
+builder.Services.AddMarten(builder.Configuration.GetConnectionString("Database")?? string.Empty);
 builder.Services.AddHandlers();
 builder.Services.AddCarter();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
