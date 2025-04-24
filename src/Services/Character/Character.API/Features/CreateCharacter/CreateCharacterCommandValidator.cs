@@ -1,8 +1,8 @@
 ﻿namespace Character.API.Features.CreateCharacter
 {
-    public class CreateCharacterRequestValidator : AbstractValidator<CreateCharacterRequest>
+    public class CreateCharacterCommandValidator : AbstractValidator<CreateCharacterCommand>
     {
-        public CreateCharacterRequestValidator()
+        public CreateCharacterCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty().MaximumLength(64);
             RuleFor(x => x.SchemaId).NotEmpty();
