@@ -23,7 +23,11 @@
                 .WithTags("Character")
                 .Produces<CreateCharacterResponse>(StatusCodes.Status201Created)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
-                .WithOpenApi();
+                .WithOpenApi(operation =>
+                {
+                    operation.RequestBody = DefaultRequestProvider.CreateCharacterRequest();
+                    return operation;
+                });
         }
     }
 }

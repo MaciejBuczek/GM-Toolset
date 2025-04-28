@@ -10,3 +10,8 @@ global using Character.API.Features.Shared.Validators;
 global using Common.Mediator;
 global using Common.Mediator.Pipelines;
 global using Character.API.Features.CreateCharacter;
+global using Microsoft.OpenApi.Any;
+global using Microsoft.OpenApi.Models;
+global using System.Net.Mime;
+global using System.Text.Json;
+global using Character.API.OpenApi.Requests;
