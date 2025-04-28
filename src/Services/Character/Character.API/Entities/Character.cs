@@ -7,6 +7,6 @@
         public Guid SchemaId { get; set; }
         public required string Name { get; set; }
         public string? Description { get; set; }
-        public required IEnumerable<Statistic> Statistics { get; set; }
+        public required ICollection<Statistic> Statistics { get; set; }
     }
 }

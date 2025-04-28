@@ -1,7 +1,7 @@
 ﻿namespace Character.API.Features.CreateCharacter
 {
     public record CreateCharacterResponse(Guid CharacterId);
-    public record CreateCharacterRequest(Guid UserId, Guid SchemaId, string Name, string Description, IEnumerable<Statistic> Statistics);
+    public record CreateCharacterRequest(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics);
 
     public class CreateCharacterEndpoint : ICarterModule
     {
@@ -23,7 +23,11 @@
                 .WithTags("Character")
                 .Produces<CreateCharacterResponse>(StatusCodes.Status201Created)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
-                .WithOpenApi();
+                .WithOpenApi(operation =>
+                {
+                    operation.RequestBody = DefaultRequestProvider.CreateCharacterRequest();
+                    return operation;
+                });
         }
     }
 }

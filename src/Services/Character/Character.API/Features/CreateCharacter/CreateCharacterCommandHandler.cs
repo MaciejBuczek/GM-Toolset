@@ -1,7 +1,7 @@
 ﻿namespace Character.API.Features.CreateCharacter
 {
     public record CreateCharacterResult(Guid CharacterId);
-    public record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, IEnumerable<Statistic> Statistics) : ICommand<CreateCharacterResult>;
+    public record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics) : ICommand<CreateCharacterResult>;
 
     public class CreateCharacterCommandHandler(IDocumentSession session) : ICommandHandler<CreateCharacterCommand, CreateCharacterResult>
     {
