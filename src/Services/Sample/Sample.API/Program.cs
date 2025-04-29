@@ -1,4 +1,5 @@
 using Carter;
+using Common.Exceptions.Handler;
 using FluentValidation;
 using Sample.API;
 
@@ -11,6 +12,7 @@ builder.Services.AddHandlers();
 
 builder.Services.AddCarter();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 // Add services to the container.
 
@@ -25,6 +27,7 @@ app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
+app.UseExceptionHandler(options => { });
 
 
 app.MapGet("/HelloAzure", () =>
