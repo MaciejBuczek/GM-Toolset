@@ -15,3 +15,5 @@ global using Microsoft.OpenApi.Models;
 global using System.Net.Mime;
 global using System.Text.Json;
 global using Character.API.OpenApi.Requests;
+global using Character.API.Features.Shared.DTOs;
+global using Marten.Exceptions;
