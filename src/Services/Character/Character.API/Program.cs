@@ -1,3 +1,5 @@
+using Common.Exceptions.Handler;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -7,6 +9,7 @@ builder.Services.AddMartenConnection(builder.Configuration.GetConnectionString("
 builder.Services.AddHandlers();
 builder.Services.AddCarter();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 
@@ -14,6 +17,8 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler(options => { });
 
 app.MapGet("/appinfo", () =>
 {
