@@ -1,4 +1,6 @@
-﻿namespace Character.API.Features.UpdateCharacter
+﻿using Character.API.Exceptions;
+
+namespace Character.API.Features.UpdateCharacter
 {
     public record UpdateCharaterResult(bool Succeded);
     public record UpdateCharacterCommand(Guid Id, Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
@@ -24,9 +26,9 @@
             }
             catch (NonExistentDocumentException)
             {
-                throw new ApplicationException("Character not found");
+                throw new CharacterNotFoundException(command.Id);
             }
-            
+
             return new UpdateCharaterResult(true);
         }
     }

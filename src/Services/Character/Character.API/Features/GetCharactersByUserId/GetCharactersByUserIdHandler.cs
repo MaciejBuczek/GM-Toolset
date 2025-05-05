@@ -1,4 +1,6 @@
-﻿namespace Character.API.Features.GetCharactersByUserId
+﻿using Common.Exceptions;
+
+namespace Character.API.Features.GetCharactersByUserId
 {
     public record GetCharactersByUserIdResult(IEnumerable<Entities.Character> Characters);
     public record GetCharactersByUserIdQuery(Guid Id) : IQuery<GetCharactersByUserIdResult>;
@@ -8,7 +10,7 @@
         {
             var characters = await session.Query<Entities.Character>().Where(c => c.UserId.Equals(query.Id)).ToListAsync(cancellationToken);
             return characters is null || characters.IsEmpty()
-                ? throw new ApplicationException("Characters not found")
+                ? throw new NotFoundException($"Characters not found - UserId: {query.Id}")
                 : new GetCharactersByUserIdResult(characters);
         }
     }
