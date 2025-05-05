@@ -26,7 +26,7 @@ namespace Character.API.Features.CreateCharacter
             }
             catch (DocumentAlreadyExistsException)
             {
-                throw new BadRequestException("Characther with this id already exists");
+                throw new BadRequestException("Character with this id already exists");
             }
 
 
