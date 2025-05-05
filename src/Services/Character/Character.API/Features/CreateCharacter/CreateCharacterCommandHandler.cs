@@ -1,4 +1,6 @@
-﻿namespace Character.API.Features.CreateCharacter
+﻿using Common.Exceptions;
+
+namespace Character.API.Features.CreateCharacter
 {
     public record CreateCharacterResult(Guid CharacterId);
     public record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
@@ -24,7 +26,7 @@
             }
             catch (DocumentAlreadyExistsException)
             {
-                throw new ApplicationException("Characther with this id already exists");
+                throw new BadRequestException("Character with this id already exists");
             }
 
 
