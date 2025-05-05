@@ -2,7 +2,7 @@
 
 namespace Character.API.Exceptions
 {
-    public class CharacterNotFoundException(Guid Id) : NotFoundException("Character", Id)
+    public class CharacterNotFoundException(Guid Id) : NotFoundException(nameof(Entities.Character), Id)
     {
     }
 }
