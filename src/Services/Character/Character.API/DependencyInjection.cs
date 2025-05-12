@@ -18,12 +18,13 @@
         {
             services.Scan(scan => scan
                 .FromAssemblyOf<Program>()
-                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)))
+                .AddClasses(classes => classes.AssignableTo(typeof(IRequestHandler<,>)), publicOnly: false)
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
             services.AddValidatorsFromAssembly(
-                typeof(Program).Assembly);
+                typeof(Program).Assembly,
+                includeInternalTypes: true);
 
             services.Decorate(
                 typeof(IRequestHandler<,>),
