@@ -39,5 +39,11 @@
         {
             return app;
         }
+
+        public static IServiceCollection AddCharacterRepository(this IServiceCollection services)
+        {
+            services.AddTransient<ICharacterRepository, CharacterRepository>();
+            return services;
+        }
     }
 }
