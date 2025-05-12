@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.UpdateCharacter
 {
-    internal record UpdateCharaterResult(bool Succeded);
+    internal record UpdateCharaterResult(bool Success);
     internal record UpdateCharacterCommand(Guid Id, Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
         : CharacterBaseRequest(UserId, SchemaId, Name, Description, Statistics), ICommand<UpdateCharaterResult>;
 
