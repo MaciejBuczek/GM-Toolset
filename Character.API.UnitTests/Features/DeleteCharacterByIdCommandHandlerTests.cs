@@ -24,14 +24,18 @@
         {
             //Arrange
             var command = new DeleteCharacterByIdCommand(Guid.NewGuid());
+            var character = new Entities.Character
+            {
+                Id = Guid.NewGuid(),
+                SchemaId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                Name = "Glimbo the Goblin",
+                Description = "He is just a wibble goblin",
+                Statistics = [new Statistic { Name = "Size", Value = "Wibble" }]
+            };
 
             _session.Setup(x => x.LoadAsync<Entities.Character>(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new Entities.Character
-                {
-                    Id = Guid.NewGuid(),
-                    Name = string.Empty,
-                    Statistics = []
-                });
+                .ReturnsAsync(character);
             _session.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
