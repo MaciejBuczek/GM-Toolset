@@ -13,7 +13,7 @@
                 );
 
         [Fact]
-        public async Task Handle_ShouldThrowException_WhenIdIsNotUnique()
+        public async Task Handle_ShouldThrowBadRequestException_WhenIdIsNotUnique()
         {
             //Arrange
             var command = CreateCharacterCommand;
