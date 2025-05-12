@@ -4,3 +4,5 @@ global using Character.API.Features.CreateCharacter;
 global using Character.API.Entities;
 global using Common.Exceptions;
 global using Marten.Exceptions;
+global using Character.API.Exceptions;
+global using Character.API.Features.DeleteCharacterById;
