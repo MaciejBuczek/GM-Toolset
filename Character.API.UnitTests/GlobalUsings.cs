@@ -1,0 +1,6 @@
+﻿global using Moq;
+global using Marten;
+global using Character.API.Features.CreateCharacter;
+global using Character.API.Entities;
+global using Common.Exceptions;
+global using Marten.Exceptions;
