@@ -1,12 +1,10 @@
-﻿using Character.API.Exceptions;
-
-namespace Character.API.Features.UpdateCharacter
+﻿namespace Character.API.Features.UpdateCharacter
 {
-    public record UpdateCharaterResult(bool Succeded);
-    public record UpdateCharacterCommand(Guid Id, Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
+    internal record UpdateCharaterResult(bool Succeded);
+    internal record UpdateCharacterCommand(Guid Id, Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
         : CharacterBaseRequest(UserId, SchemaId, Name, Description, Statistics), ICommand<UpdateCharaterResult>;
 
-    public class UpdateCharacterHandler(IDocumentSession session) : ICommandHandler<UpdateCharacterCommand, UpdateCharaterResult>
+    internal class UpdateCharacterHandler(ICharacterRepository repository) : ICommandHandler<UpdateCharacterCommand, UpdateCharaterResult>
     {
         public async Task<UpdateCharaterResult> Handle(UpdateCharacterCommand command, CancellationToken cancellationToken = default)
         {
@@ -21,8 +19,7 @@ namespace Character.API.Features.UpdateCharacter
             };
             try
             {
-                session.Update(character);
-                await session.SaveChangesAsync(cancellationToken);
+                await repository.UpdateCharacterAsync(character, cancellationToken);
             }
             catch (NonExistentDocumentException)
             {

@@ -18,3 +18,5 @@ global using Character.API.OpenApi.Requests;
 global using Character.API.Features.Shared.DTOs;
 global using Marten.Exceptions;
 global using Character.API.Data;
+global using Character.API.Exceptions;
+global using Common.Exceptions;
