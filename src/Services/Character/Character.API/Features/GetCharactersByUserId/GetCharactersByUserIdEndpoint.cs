@@ -1,8 +1,8 @@
 ﻿namespace Character.API.Features.GetCharactersByUserId
 {
-    public record GetCharactersByUserIdResponse(IEnumerable<Entities.Character> Characters);
+    internal record GetCharactersByUserIdResponse(IEnumerable<Entities.Character> Characters);
 
-    public class GetCharactersByUserIdEndpoint : ICarterModule
+    internal class GetCharactersByUserIdEndpoint : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {

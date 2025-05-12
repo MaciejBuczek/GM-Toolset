@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.DeleteCharacterById
 {
-    public class DeleteCharacterByIdCommandValidator : AbstractValidator<DeleteCharacterByIdCommand>
+    internal class DeleteCharacterByIdCommandValidator : AbstractValidator<DeleteCharacterByIdCommand>
     {
         public DeleteCharacterByIdCommandValidator()
         {

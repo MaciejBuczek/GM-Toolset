@@ -3,10 +3,10 @@ using Character.API.Exceptions;
 
 namespace Character.API.Features.GetCharacterById
 {
-    public record GetCharacterByIdResult(Entities.Character Character);
-    public record GetCharacterByIdQuery(Guid Id) : IQuery<GetCharacterByIdResult>;
+    internal record GetCharacterByIdResult(Entities.Character Character);
+    internal record GetCharacterByIdQuery(Guid Id) : IQuery<GetCharacterByIdResult>;
 
-    public class GetCharacterByIdQueryHandler(IDocumentSession session) : IQueryHandler<GetCharacterByIdQuery, GetCharacterByIdResult>
+    internal class GetCharacterByIdQueryHandler(IDocumentSession session) : IQueryHandler<GetCharacterByIdQuery, GetCharacterByIdResult>
     {
         public async Task<GetCharacterByIdResult> Handle(GetCharacterByIdQuery query, CancellationToken cancellationToken = default)
         {

@@ -2,11 +2,11 @@
 
 namespace Character.API.Features.CreateCharacter
 {
-    public record CreateCharacterResult(Guid CharacterId);
-    public record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
+    internal record CreateCharacterResult(Guid CharacterId);
+    internal record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
         : CharacterBaseRequest(UserId, SchemaId, Name, Description, Statistics), ICommand<CreateCharacterResult>;
 
-    public class CreateCharacterCommandHandler(IDocumentSession session) : ICommandHandler<CreateCharacterCommand, CreateCharacterResult>
+    internal class CreateCharacterCommandHandler(IDocumentSession session) : ICommandHandler<CreateCharacterCommand, CreateCharacterResult>
     {
         public async Task<CreateCharacterResult> Handle(CreateCharacterCommand command, CancellationToken cancellationToken)
         {
