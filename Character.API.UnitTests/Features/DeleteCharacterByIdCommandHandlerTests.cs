@@ -20,7 +20,7 @@
         }
 
         [Fact]
-        public async Task Handle_ShouldReturnDeleteCharacterByIdResult_WhenCharacterIsNotFound()
+        public async Task Handle_ShouldReturnDeleteCharacterByIdResult_WhenCharacterIsFound()
         {
             //Arrange
             var command = new DeleteCharacterByIdCommand(Guid.NewGuid());
