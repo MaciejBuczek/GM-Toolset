@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.CreateCharacter
 {
-    public class CreateCharacterCommandValidator : AbstractValidator<CreateCharacterCommand>
+    internal class CreateCharacterCommandValidator : AbstractValidator<CreateCharacterCommand>
     {
         public CreateCharacterCommandValidator()
         {

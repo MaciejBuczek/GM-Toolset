@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.UpdateCharacter
 {
-    public class UpdateCharacterCommandValidator : AbstractValidator<UpdateCharacterCommand>
+    internal class UpdateCharacterCommandValidator : AbstractValidator<UpdateCharacterCommand>
     {
         public UpdateCharacterCommandValidator()
         {
