@@ -1,19 +1,15 @@
-﻿using Character.API.Exceptions;
-
-namespace Character.API.Features.DeleteCharacterById
+﻿namespace Character.API.Features.DeleteCharacterById
 {
     internal record DeleteCharacterByIdResult(bool Success);
     internal record DeleteCharacterByIdCommand(Guid Id) : ICommand<DeleteCharacterByIdResult>;
-    
-    internal class DeleteCharacterByIdCommandHandler(IDocumentSession session) : ICommandHandler<DeleteCharacterByIdCommand, DeleteCharacterByIdResult>
+    internal class DeleteCharacterByIdHandler(ICharacterRepository repository) : ICommandHandler<DeleteCharacterByIdCommand, DeleteCharacterByIdResult>
     {
         public async Task<DeleteCharacterByIdResult> Handle(DeleteCharacterByIdCommand command, CancellationToken cancellationToken = default)
         {
-            var character = await session.LoadAsync<Entities.Character>(command.Id, cancellationToken) ??
+            var character = await repository.GetCharacterByIdAsync(command.Id, cancellationToken) ??
                 throw new CharacterNotFoundException(command.Id);
 
-            session.Delete(character);
-            await session.SaveChangesAsync(cancellationToken);
+            await repository.DeleteCharacterAsync(character, cancellationToken);
             return new DeleteCharacterByIdResult(true);
         }
     }

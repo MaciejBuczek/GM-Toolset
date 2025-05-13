@@ -6,7 +6,7 @@ namespace Character.API.Features.CreateCharacter
     internal record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
         : CharacterBaseRequest(UserId, SchemaId, Name, Description, Statistics), ICommand<CreateCharacterResult>;
 
-    internal class CreateCharacterCommandHandler(IDocumentSession session) : ICommandHandler<CreateCharacterCommand, CreateCharacterResult>
+    internal class CreateCharacterCommandHandler(ICharacterRepository repository) : ICommandHandler<CreateCharacterCommand, CreateCharacterResult>
     {
         public async Task<CreateCharacterResult> Handle(CreateCharacterCommand command, CancellationToken cancellationToken)
         {
@@ -21,8 +21,7 @@ namespace Character.API.Features.CreateCharacter
 
             try
             {
-                session.Insert(character);
-                await session.SaveChangesAsync(cancellationToken);
+                await repository.CreateCharacterAsync(character, cancellationToken);
             }
             catch (DocumentAlreadyExistsException)
             {
