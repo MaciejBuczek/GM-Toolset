@@ -2,7 +2,7 @@
 {
     internal record DeleteCharacterByIdResult(bool Success);
     internal record DeleteCharacterByIdCommand(Guid Id) : ICommand<DeleteCharacterByIdResult>;
-    internal class DeleteCharacterByIdHandler(ICharacterRepository repository) : ICommandHandler<DeleteCharacterByIdCommand, DeleteCharacterByIdResult>
+    internal class DeleteCharacterByIdCommandHandler(ICharacterRepository repository) : ICommandHandler<DeleteCharacterByIdCommand, DeleteCharacterByIdResult>
     {
         public async Task<DeleteCharacterByIdResult> Handle(DeleteCharacterByIdCommand command, CancellationToken cancellationToken = default)
         {
