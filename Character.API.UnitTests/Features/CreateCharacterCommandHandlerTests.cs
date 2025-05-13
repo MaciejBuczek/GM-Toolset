@@ -4,7 +4,7 @@
     {
         private readonly Mock<ICharacterRepository> _repository = new();
 
-        private static CreateCharacterCommand _createCharacterCommand => new(
+        private readonly CreateCharacterCommand _createCharacterCommand = new(
                 UserId: Guid.NewGuid(),
                 SchemaId: Guid.NewGuid(),
                 Name: "Glimbo the Goblin",
@@ -32,18 +32,9 @@
         {
             //Arrange
             var command = _createCharacterCommand;
-            var insertedCharacter = new Entities.Character
-            {
-                Name = command.Name,
-                Statistics = command.Statistics
-            };
 
             _repository.Setup(x => x.CreateCharacterAsync(It.IsAny<Entities.Character>(), It.IsAny<CancellationToken>()))
-                .Callback<Entities.Character, CancellationToken>((character, token) =>
-                {
-                    character.Id = Guid.NewGuid();
-                    insertedCharacter = character;
-                });
+                .ReturnsAsync(Guid.NewGuid());
 
             var handler = new CreateCharacterCommandHandler(_repository.Object);
 
@@ -52,7 +43,7 @@
 
             //Assert
             Assert.NotNull(result);
-            Assert.Equal(insertedCharacter.Id, result.CharacterId);
+            Assert.NotEqual(Guid.Empty, result.CharacterId);
         }
     }
 }

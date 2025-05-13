@@ -1,6 +1,4 @@
-﻿using Common.Exceptions;
-
-namespace Character.API.Features.CreateCharacter
+﻿namespace Character.API.Features.CreateCharacter
 {
     internal record CreateCharacterResult(Guid CharacterId);
     internal record CreateCharacterCommand(Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
@@ -19,17 +17,17 @@ namespace Character.API.Features.CreateCharacter
                 Statistics = command.Statistics
             };
 
+            Guid createdCharacterId;
             try
             {
-                await repository.CreateCharacterAsync(character, cancellationToken);
+                createdCharacterId = await repository.CreateCharacterAsync(character, cancellationToken);
             }
             catch (DocumentAlreadyExistsException)
             {
                 throw new BadRequestException("Character with this id already exists");
             }
 
-
-            return new CreateCharacterResult(character.Id);
+            return new CreateCharacterResult(createdCharacterId);
         }
     }
 }
