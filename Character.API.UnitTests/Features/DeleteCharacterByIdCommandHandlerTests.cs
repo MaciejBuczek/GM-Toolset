@@ -2,7 +2,7 @@
 {
     public class DeleteCharacterByIdCommandHandlerTests
     {
-        private readonly Mock<IDocumentSession> _session = new();
+        private readonly Mock<ICharacterRepository> _repository = new();
 
         [Fact]
         public async Task Handle_ShouldThrowCharacterNotFoundException_WhenCharacterIsNotFound()
@@ -10,10 +10,10 @@
             //Arrange
             var command = new DeleteCharacterByIdCommand(Guid.NewGuid());
 
-            _session.Setup(x => x.LoadAsync<Entities.Character>(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            _repository.Setup(x => x.GetCharacterByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => null);
 
-            var handler = new DeleteCharacterByIdCommandHandler(_session.Object);
+            var handler = new DeleteCharacterByIdCommandHandler(_repository.Object);
 
             //Act & Assert
             await Assert.ThrowsAsync<CharacterNotFoundException>(async () => await handler.Handle(command, default));
@@ -34,19 +34,18 @@
                 Statistics = [new Statistic { Name = "Size", Value = "Wibble" }]
             };
 
-            _session.Setup(x => x.LoadAsync<Entities.Character>(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(character);
-            _session.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+            _repository.Setup(x => x.GetCharacterByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => character);
+            _repository.Setup(x => x.DeleteCharacterAsync(It.IsAny<Entities.Character>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(true);
 
-            var handler = new DeleteCharacterByIdCommandHandler(_session.Object);
+            var handler = new DeleteCharacterByIdCommandHandler(_repository.Object);
 
             //Act
             var result = await handler.Handle(command, default);
 
             //Assert
-            _session.Verify(s => s.Delete(It.IsAny<Entities.Character>()), Times.Once);
-            _session.Verify(s => s.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+            _repository.Verify(r => r.DeleteCharacterAsync(It.IsAny<Entities.Character>(), default), Times.Once);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

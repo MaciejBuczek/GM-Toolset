@@ -7,3 +7,4 @@ global using Marten.Exceptions;
 global using Character.API.Exceptions;
 global using Character.API.Features.DeleteCharacterById;
 global using Character.API.Features.GetCharacterById;
+global using Character.API.Data;
