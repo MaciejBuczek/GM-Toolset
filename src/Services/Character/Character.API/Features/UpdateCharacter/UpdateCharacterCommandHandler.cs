@@ -4,7 +4,7 @@
     internal record UpdateCharacterCommand(Guid Id, Guid UserId, Guid SchemaId, string Name, string Description, ICollection<Statistic> Statistics)
         : CharacterBaseRequest(UserId, SchemaId, Name, Description, Statistics), ICommand<UpdateCharaterResult>;
 
-    internal class UpdateCharacterHandler(ICharacterRepository repository) : ICommandHandler<UpdateCharacterCommand, UpdateCharaterResult>
+    internal class UpdateCharacterCommandHandler(ICharacterRepository repository) : ICommandHandler<UpdateCharacterCommand, UpdateCharaterResult>
     {
         public async Task<UpdateCharaterResult> Handle(UpdateCharacterCommand command, CancellationToken cancellationToken = default)
         {
