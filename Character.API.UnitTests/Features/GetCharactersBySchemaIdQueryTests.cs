@@ -8,15 +8,15 @@
         public async Task Handle_ShouldThrowCharacterNotFoundException_WhenSchemaIdIsNotMatching()
         {
             //Arrange
-            var query = new GetCharacterByIdQuery(Guid.NewGuid());
+            var query = new GetCharactersBySchemaIdQuery(Guid.NewGuid());
 
             _repository.Setup(x => x.GetCharacterBySchemaIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => []);
 
-            var handler = new GetCharacterByIdQueryHandler(_repository.Object);
+            var handler = new GetCharactersBySchemaIdQueryHandler(_repository.Object);
 
             //Act & Assert
-            await Assert.ThrowsAsync<CharacterNotFoundException>(async () => await handler.Handle(query, default));
+            await Assert.ThrowsAsync<NotFoundException>(async () => await handler.Handle(query, default));
         }
 
         [Fact]
