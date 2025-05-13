@@ -1,10 +1,10 @@
-﻿global using Moq;
-global using Marten;
-global using Character.API.Features.CreateCharacter;
+﻿global using Character.API.Data;
 global using Character.API.Entities;
-global using Common.Exceptions;
-global using Marten.Exceptions;
 global using Character.API.Exceptions;
+global using Character.API.Features.CreateCharacter;
 global using Character.API.Features.DeleteCharacterById;
 global using Character.API.Features.GetCharacterById;
-global using Character.API.Data;
+global using Character.API.Features.GetCharactersBySchemaId;
+global using Common.Exceptions;
+global using Marten.Exceptions;
+global using Moq;
