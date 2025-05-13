@@ -8,3 +8,4 @@ global using Character.API.Features.GetCharactersBySchemaId;
 global using Common.Exceptions;
 global using Marten.Exceptions;
 global using Moq;
+global using Character.API.Features.GetCharactersByUserId;
