@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.GetCharacterById
 {
-    public class GetCharacterQueryValidator : AbstractValidator<GetCharacterByIdQuery>
+    internal class GetCharacterQueryValidator : AbstractValidator<GetCharacterByIdQuery>
     {
         public GetCharacterQueryValidator()
         {

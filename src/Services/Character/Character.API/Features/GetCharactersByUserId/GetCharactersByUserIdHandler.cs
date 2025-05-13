@@ -1,15 +1,14 @@
-﻿using Common.Exceptions;
-
-namespace Character.API.Features.GetCharactersByUserId
+﻿namespace Character.API.Features.GetCharactersByUserId
 {
-    public record GetCharactersByUserIdResult(IEnumerable<Entities.Character> Characters);
-    public record GetCharactersByUserIdQuery(Guid Id) : IQuery<GetCharactersByUserIdResult>;
-    public class GetCharactersByUserIdQueryHandler(IDocumentSession session) : IQueryHandler<GetCharactersByUserIdQuery, GetCharactersByUserIdResult>
+    internal record GetCharactersByUserIdResult(IEnumerable<Entities.Character> Characters);
+    internal record GetCharactersByUserIdQuery(Guid Id) : IQuery<GetCharactersByUserIdResult>;
+
+    internal class GetCharactersByUserIdQueryHandler(ICharacterRepository repository) : IQueryHandler<GetCharactersByUserIdQuery, GetCharactersByUserIdResult>
     {
         public async Task<GetCharactersByUserIdResult> Handle(GetCharactersByUserIdQuery query, CancellationToken cancellationToken = default)
         {
-            var characters = await session.Query<Entities.Character>().Where(c => c.UserId.Equals(query.Id)).ToListAsync(cancellationToken);
-            return characters is null || characters.IsEmpty()
+            var characters = await repository.GetCharacterByUserIdAsync(query.Id, cancellationToken);
+            return characters.IsEmpty()
                 ? throw new NotFoundException($"Characters not found - UserId: {query.Id}")
                 : new GetCharactersByUserIdResult(characters);
         }
