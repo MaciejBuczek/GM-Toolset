@@ -18,4 +18,4 @@ jobs:
           dotnet-version: 8.x
 
       - name: Run unit tests
-        run: dotnet test ./Character.API.UnitTests/Character.API.UnitTests.csproj --no-build --verbosity normal
+        run: dotnet test ./Character.API.UnitTests/Character.API.UnitTests.csproj --verbosity normal
