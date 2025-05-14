@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.Shared.Validators
 {
-    public class StatisticValidator : AbstractValidator<Statistic>
+    internal class StatisticValidator : AbstractValidator<Statistic>
     {
         public StatisticValidator()
         {

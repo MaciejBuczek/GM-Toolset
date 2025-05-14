@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Data
 {
-    internal interface ICharacterRepository
+    public interface ICharacterRepository
     {
         Task<Entities.Character?> GetCharacterByIdAsync(Guid id, CancellationToken cancellationToken);
         Task<IEnumerable<Entities.Character>> GetCharacterByUserIdAsync(Guid userId, CancellationToken cancellationToken);

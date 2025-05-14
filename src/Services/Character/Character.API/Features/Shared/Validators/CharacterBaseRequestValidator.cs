@@ -1,6 +1,6 @@
 ﻿namespace Character.API.Features.Shared.Validators
 {
-    public class CharacterBaseRequestValidator : AbstractValidator<CharacterBaseRequest>
+    internal class CharacterBaseRequestValidator : AbstractValidator<CharacterBaseRequest>
     {
         public CharacterBaseRequestValidator()
         {
