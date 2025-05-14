@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, edited]
 
 jobs:
-  test:
+  validate-tests:
     runs-on: windows-latest
 
     steps:
