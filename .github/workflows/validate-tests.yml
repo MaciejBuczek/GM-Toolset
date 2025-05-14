@@ -1,0 +1,21 @@
+name: Validate Tests
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, edited]
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.x
+
+      - name: Run unit tests
+        run: dotnet test ./Tests/Character.API.UnitTests/Character.API.UnitTests.csproj --no-build --verbosity normal
