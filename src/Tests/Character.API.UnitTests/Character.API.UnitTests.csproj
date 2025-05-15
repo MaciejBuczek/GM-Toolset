@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Services\Character\Character.API\Character.API.csproj" />
+    <ProjectReference Include="..\..\Services\Character\Character.API\Character.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
