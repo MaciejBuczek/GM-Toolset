@@ -18,7 +18,7 @@ services:
             - ConnectionStrings__Database=Server=character.db;Port=6001;Database=CharacterDB;User Id=postgres;Password=postgres;Include Error Detail=true
         ports:
             - "5001:8080"
-            - "5501:8081"
+            - "5051:8081"
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
