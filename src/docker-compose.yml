@@ -1,4 +1,9 @@
 services:
+    gateway.api:
+        image: ${DOCKER_REGISTRY-}gatewayapi
+        build:
+          context: .
+          dockerfile: Gateway/Gateway.API/Dockerfile
     character.db:
         image: postgres
     character.api:

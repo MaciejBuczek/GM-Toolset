@@ -17,8 +17,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
-
 app.UseExceptionHandler(options => { });
 
 app.MapGet("/appinfo", () =>
