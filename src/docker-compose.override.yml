@@ -1,4 +1,14 @@
 services:
+    gateway.api:
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_HTTP_PORTS=5000
+          - ASPNETCORE_HTTPS_PORTS=5001
+        volumes:
+          - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+          - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+          - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+          - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     character.db:
         container_name: character.db
         environment:
@@ -6,19 +16,14 @@ services:
           - POSTGRES_PASSWORD=postgres
           - POSTGRES_DB=CharacterDB
         restart: always
-        ports:
-            - "6001:5432"
         volumes:
           - postgres:/var/lib/postgresql/data/
     character.api:
         environment:
             - ASPNETCORE_ENVIRONMENT=Development
-            - ASPNETCORE_HTTP_PORTS=8080
-            - ASPNETCORE_HTTPS_PORTS=8081
-            - ConnectionStrings__Database=Server=character.db;Port=6001;Database=CharacterDB;User Id=postgres;Password=postgres;Include Error Detail=true
-        ports:
-            - "5001:8080"
-            - "5051:8081"
+            - ASPNETCORE_HTTP_PORTS=5100
+            - ASPNETCORE_HTTPS_PORTS=5101
+            - ConnectionStrings__Database=Server=character.db;Port=5432;Database=CharacterDB;User Id=postgres;Password=postgres;Include Error Detail=true
         volumes:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
