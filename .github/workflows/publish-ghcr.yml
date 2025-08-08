@@ -6,6 +6,7 @@ on:
       - main
 
 env:
+  GATEWAY_CONTAINER_APP_NAME: gateway-api
   CHARACTER_CONTAINER_APP_NAME: character-api
   RESOURCE_GROUP: gm-toolset
 
@@ -14,10 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Build and push the image
+
+      - name: Build and push Gateway.API image
         run: |
-          docker login --username maciejbuczek --password ${{secrets.GHCR}} ghcr.io
-          docker build -f ./src/Services/Character/Character.API/Dockerfile . -t ghcr.io/maciejbuczek/character.api:latest
+          docker login --username maciejbuczek --password ${{ secrets.GHCR }} ghcr.io
+          docker build -f ./src/Gateway/Gateway.API/Dockerfile . \
+            -t ghcr.io/maciejbuczek/gateway.api:latest
+          docker push ghcr.io/maciejbuczek/gateway.api:latest
+      
+      - name: Build and push Character.API image
+        run: |
+          docker login --username maciejbuczek --password ${{ secrets.GHCR }} ghcr.io
+          docker build -f ./src/Services/Character/Character.API/Dockerfile . \
+            -t ghcr.io/maciejbuczek/character.api:latest
           docker push ghcr.io/maciejbuczek/character.api:latest
 
       - name: Azure Login
@@ -25,7 +35,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Container Apps
+      - name: Deploy Gateway.API to Azure Container Apps
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          imageToDeploy: ghcr.io/maciejbuczek/gateway.api:latest
+          resourceGroup: ${{ env.RESOURCE_GROUP }}
+          containerAppName: ${{ env.GATEWAY_CONTAINER_APP_NAME }}
+
+      - name: Deploy Character.API to Azure Container Apps
         uses: azure/container-apps-deploy-action@v1
         with:
           imageToDeploy: ghcr.io/maciejbuczek/character.api:latest
