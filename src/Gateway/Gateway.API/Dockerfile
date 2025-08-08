@@ -6,14 +6,14 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-
+LABEL org.opencontainers.image.source https://github.com/maciejbuczek/gm-toolset
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Gateway/Gateway.API/Gateway.API.csproj", "Gateway/Gateway.API/"]
-RUN dotnet restore "./Gateway/Gateway.API/Gateway.API.csproj"
+COPY src/ . 
+RUN dotnet restore "/Gateway/Gateway.API/Gateway.API.csproj"
 COPY . .
 WORKDIR "/src/Gateway/Gateway.API"
 RUN dotnet build "./Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/build

@@ -4,31 +4,12 @@ services:
         build:
           context: .
           dockerfile: Gateway/Gateway.API/Dockerfile
-        ports:
-          - "5000:5000"
-          - "5001:5001"
-        networks:
-          - proxybackend
     character.db:
         image: postgres
-        ports:
-            - "6001:5432"
-        networks:
-          - proxybackend
     character.api:
         image: ${DOCKER_REGISTRY-}characterapi
         build:
             context: .
             dockerfile: Services/Character/Character.API/Dockerfile
-        ports:
-            - "5100:5100"
-            - "5101:5101"
-        networks:
-          - proxybackend
 volumes:    
     postgres:
-
-networks:
-    proxybackend:
-        name: proxybackend
-        driver: bridge
