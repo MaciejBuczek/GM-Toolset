@@ -1,0 +1,10 @@
+﻿global using Carter;
+global using FluentValidation;
+global using Common.CQRS;
+global using Common.Mediator;
+global using Mapster;
+global using Microsoft.OpenApi.Any;
+global using Microsoft.OpenApi.Models;
+global using Microsoft.AspNetCore.Identity;
+global using Identity.API.Data;
+global using Common.Mediator.Pipelines;

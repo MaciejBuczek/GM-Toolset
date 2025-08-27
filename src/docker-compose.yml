@@ -11,5 +11,14 @@ services:
         build:
             context: .
             dockerfile: Services/Character/Character.API/Dockerfile
+    identity.api:
+        image: ${DOCKER_REGISTRY-}identityapi
+        build:
+            context: .
+            dockerfile: Identity/Identity.API/Dockerfile
+    identity.db:
+        image: mcr.microsoft.com/mssql/server:2025-latest
+
 volumes:    
     postgres:
+    mssql:

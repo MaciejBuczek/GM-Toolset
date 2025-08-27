@@ -41,3 +41,28 @@ services:
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
         depends_on:
             - character.db
+    identity.api:
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_HTTP_PORTS=8080
+          - ASPNETCORE_HTTPS_PORTS=8081
+          - ConnectionStrings__Database=Data Source=identity.db;Initial Catalog=IdentityDB;User ID=sa;Password=password1!;TrustServerCertificate=True
+        ports:
+           - 5003:8080
+           - 5053:8081
+        volumes:
+          - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+          - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+          - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+          - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+        depends_on:
+          - identity.db
+    identity.db:
+        container_name: identity.db
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=password1!
+        ports:
+            - 6002:1433
+        volumes:
+            - mssql:/var/opt/mssql
