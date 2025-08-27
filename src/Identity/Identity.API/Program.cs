@@ -11,6 +11,7 @@ builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(con
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
+    options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequiredLength = 8;
 })
