@@ -24,12 +24,7 @@ namespace Identity.API.Features.RegisterUser
                 .WithTags("Identity")
                 .Produces<RegisterUserResponse>(StatusCodes.Status201Created)
                 .ProducesProblem(StatusCodes.Status400BadRequest)
-                ;
-                //.WithOpenApi(operation =>
-                //{
-                //    operation.RequestBody = DefaultRequestProvider.RegisterUserRequest();
-                //    return operation;
-                //});
+                .WithOpenApi();
         }
     }
 }

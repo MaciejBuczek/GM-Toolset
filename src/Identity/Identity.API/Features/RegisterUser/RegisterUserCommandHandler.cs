@@ -1,6 +1,4 @@
 ﻿
-using Common.Exceptions;
-
 namespace Identity.API.Features.RegisterUser
 {
     internal record RegisterUserResult(bool Success);
@@ -16,20 +14,14 @@ namespace Identity.API.Features.RegisterUser
                 Email = command.Email
             };
 
-            try
-            {
-                var result = await repository.RegisterUserAsync(identityUser, command.Password, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                throw new BadRequestException(ex.Message);
-            }
-            //catch (DocumentAlreadyExistsException)
-            //{
-            //    throw new BadRequestException("Character with this id already exists");
-            //}
+            var result = await repository.RegisterUserAsync(identityUser, command.Password, cancellationToken);
 
-            return new RegisterUserResult(true);
+            if (result.Errors.Any())
+            {
+                throw new ValidationException(result.Errors.Select(e => new ValidationFailure(e.Code, e.Description)));
+            }
+
+            return result.Succeeded ? new RegisterUserResult(true) : throw new InternalServerException("Something went wrong.");
         }
     }
 }
